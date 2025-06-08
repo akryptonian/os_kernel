@@ -1,0 +1,21 @@
+[BITS 16]
+[ORG 0X7C00]
+
+;Print a message
+MOV AH, 0X0E
+MOV SI, MSG
+
+PRINT_LOOP:
+  LODSB
+  CMP AL, 0
+  JE DONE
+  INT 0X10
+  JMP PRINT_LOOP
+
+DONE:
+  JMP $
+
+MSG DB 'Booting the OS...', 0
+
+TIMES 510 - ($ - $$) DB 0
+DW 0XAA55  
